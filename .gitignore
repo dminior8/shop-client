@@ -1,0 +1,168 @@
+######################
+# Standard Project Exclusions
+######################
+# Compiled classes
+*.class
+
+# Temporary files
+*~
+*.tmp
+*.bak
+*.swp
+*.log
+.merge_file*
+*.sublime-project
+*.sublime-workspace
+.history/
+.idea/
+.vscode/
+
+######################
+# Build Tools - Common
+######################
+# General build output directories
+/build/
+/target/
+/out/
+
+# Dependency directories
+/node_modules/
+/node/
+node_tmp/
+npm-debug.log.*
+.sass-cache/
+
+# Cache directories
+.gradle/
+
+# Package files
+*.jar
+*.war
+*.ear
+*.db
+*.zip
+*.aar
+
+######################
+# IDEs
+######################
+# IntelliJ IDEA
+*.iml
+*.iws
+*.ipr
+*.ids
+*.orig
+.idea/workspace.xml
+.idea/libraries/
+.idea/gradle.xml
+.idea/compiler.xml
+.idea/modules.xml
+.idea/codeStyles/
+.idea/vcs.xml
+.idea/encodings.xml
+.idea/jsLibraryMappings.xml
+.idea/misc.xml
+.idea/navigationSettings.xml
+.idea/copyright/
+
+# Eclipse
+.project
+.classpath
+.settings/
+.loadpath
+.factorypath
+*.pydevproject
+.metadata/
+tmp/
+tmp/**/*
+*.launch
+.cproject
+.buildpath
+/src/main/resources/rebel.xml
+.externalToolBuilders/
+
+# VS Code
+.vscode/
+
+######################
+# OS-Specific
+######################
+# macOS
+.DS_Store
+.Trashes
+._*
+.Spotlight-V100
+.svn # Often seen on Mac for old SVN checkouts
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+######################
+# Spring Boot / Java Specific
+######################
+# Maven build output
+*/target/**
+/log/
+
+# Gradle build output
+/build/
+
+# Gradle Wrapper (important: keep the .jar file, ignore others)
+!gradle/wrapper/gradle-wrapper.jar
+gradle/wrapper/gradle-wrapper.properties.
+gradle-wrapper.properties
+
+# Maven Wrapper (important: keep the .jar file, ignore others)
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties.
+maven-wrapper.properties
+
+# Annotation processing
+/generated-sources/ # For generated sources like MapStruct mappers
+/target/generated-sources/annotations/
+
+# Specific to Spring Boot and configuration properties
+*.jks
+*.p12
+*.properties # Careful with this, you might want to version control some application.properties
+*.yml # Same as above for application.yml
+
+######################
+# Android Specific
+######################
+# Built application files
+*.apk
+*.ap_
+*.aab
+
+# Files for the Android tool to store the /data/app/package directories.
+*.dm
+
+# Gradle files specific to Android
+local.properties
+.cxx/
+.externalNativeBuild/
+/src/main/res/merged_*.dir/
+/src/main/res/raw/
+/src/androidTest/assets/
+/src/main/assets/
+/src/main/generated/
+
+# Keystore files
+*.keystore
+
+# Crashlytics debug files
+crashlytics-build.properties
+fabric.properties
+
+# Android Studio project specific
+/app/build/
+
+######################
+# JavaScript/Frontend Specific (if applicable, e.g., for some frontend frameworks)
+######################
+/build/www/**
+/src/test/javascript/coverage/
+/src/test/javascript/PhantomJS*
+.eslintcache
