@@ -1,4 +1,4 @@
-package pl.dminior8.shop_client.ui.theme
+package pl.dminior8.shop_client.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
