@@ -1,6 +1,7 @@
 package pl.dminior8.shop_client.presentation.ui
 
 
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
@@ -22,25 +23,26 @@ fun MainScreen() {
         val navController = rememberNavController()
         NavHost(navController, startDestination = "product_list") {
             composable("product_list") {
-                ProductListScreen(onProductClick = { id ->
-                    navController.navigate("product_detail/$id")
+                ProductListScreen(onProductClick = { productId ->
+                    navController.navigate("product_detail/${userId}/${productId}")
                 }, onCartClick = {
                     navController.navigate("cart/${userId}")
                 })
             }
-            composable("product_detail/{productId}") { backStackEntry ->
+            composable("product_detail/{userId}/{productId}") { backStackEntry ->
+                val userId = UUID.fromString(backStackEntry.arguments?.getString("userId") ?: "")
                 val productId = backStackEntry.arguments?.getString("productId") ?: ""
-                ProductDetailScreen(productId = UUID.fromString(productId), onCartClick = {
+                ProductDetailScreen(
+                    productId = UUID.fromString(productId), onCartClick = {
                     navController.navigate("cart/${userId}")
                 })
             }
             composable("cart/{userId}") { backStackEntry ->
-                val userIdString = backStackEntry.arguments?.getString("userId") ?: ""
-                val userId = UUID.fromString(userIdString)
+                val userId = UUID.fromString(backStackEntry.arguments?.getString("userId") ?: "")
                 CartScreen(userId = userId)
             }
         }
     } else {
-        // Możesz pokazać SplashScreen lub CircularProgressIndicator
+        CircularProgressIndicator()
     }
 }

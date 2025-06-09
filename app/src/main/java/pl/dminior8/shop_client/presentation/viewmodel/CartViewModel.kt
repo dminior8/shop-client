@@ -1,22 +1,19 @@
 package pl.dminior8.shop_client.presentation.viewmodel
 
 import android.util.Log
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import pl.dminior8.shop_client.data.repository.CartRepository
+import pl.dminior8.shop_client.domain.repository.CartRepository
 import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
 class CartViewModel @Inject constructor(
-    private val cartRepo: CartRepository,
-    savedStateHandle: SavedStateHandle
+    private val cartRepo: CartRepository
 ) : ViewModel() {
-    private val userId: UUID = UUID.fromString(savedStateHandle["userId"] ?: error("Brak userId"))
 
         private val _uiState = MutableStateFlow<CartUiState>(CartUiState.Loading)
     val uiState: StateFlow<CartUiState> = _uiState.asStateFlow()
@@ -25,7 +22,7 @@ class CartViewModel @Inject constructor(
 
     fun fetchCart() {
         viewModelScope.launch {
-            cartRepo.getCartItems(userId)
+            cartRepo.getCartItems()
                 .catch { _uiState.value = CartUiState.Error("Błąd ładowania koszyka") }
                 .collect { items ->
                     val total = items.sumOf { it.price * it.quantity }
@@ -38,7 +35,6 @@ class CartViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 cartRepo.removeFromCart(
-                    userId = userId,
                     productId = productId,
                     quantity = quantity // Przekazujemy quantity do repo
                 )

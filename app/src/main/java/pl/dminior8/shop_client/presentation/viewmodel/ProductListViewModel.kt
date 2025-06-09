@@ -9,12 +9,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
-import pl.dminior8.shop_client.data.repository.ProductRepository
+import pl.dminior8.shop_client.domain.repository.ProductRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class ProductListViewModel @Inject constructor(
-    private val repo: ProductRepository
+    private val productRepository: ProductRepository
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<ProductListUiState>(ProductListUiState.Loading)
     val uiState: StateFlow<ProductListUiState> = _uiState.asStateFlow()
@@ -23,7 +23,7 @@ class ProductListViewModel @Inject constructor(
 
     private fun loadProducts() {
         viewModelScope.launch {
-            repo.getProductsFlow()
+            productRepository.getProductsFlow()
                 .catch { e ->
                     Log.e("ProductListViewModel", "Error loading products", e)
                     _uiState.value = ProductListUiState.Error("Network error")

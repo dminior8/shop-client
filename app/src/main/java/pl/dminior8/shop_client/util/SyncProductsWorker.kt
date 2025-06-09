@@ -13,7 +13,7 @@ import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.coroutineScope
-import pl.dminior8.shop_client.data.repository.ProductRepository
+import pl.dminior8.shop_client.domain.repository.ProductRepository
 import java.util.concurrent.TimeUnit
 
 // adnotacja @AssistedInject i @Assisted:
