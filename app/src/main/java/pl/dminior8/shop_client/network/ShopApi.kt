@@ -41,7 +41,7 @@ interface ShopApi {
     suspend fun checkoutCart(@Path("userId") userId: UUID)
 
     // Pobranie zawartości koszyka
-    @GET("/api/v1user/{userId}/cart")
+    @GET("/api/v1/user/{userId}/cart")
     suspend fun getCartItems(@Path("userId") userId: UUID): CartDto
 
     @GET("/api/v1/user/{userId}/cart/{cartId}")

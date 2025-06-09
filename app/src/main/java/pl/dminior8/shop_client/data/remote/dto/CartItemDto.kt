@@ -12,10 +12,10 @@ data class CartItemDto(
 
     val cartId: UUID,
 
-    @Json(name = "product_id") // mapuje productId do product_id
     val productId: UUID,
 
-//    val name: String,
+    @Json(name = "name")
+    val productName: String,
 
     val quantity: Int,
 

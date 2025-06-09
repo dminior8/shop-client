@@ -65,10 +65,9 @@ fun CartScreen(
                                     CartListItem(
                                         item = item,
                                         onRemove = {
-                                            // Przekazujemy productId I quantity z itemu
                                             viewModel.removeFromCart(
                                                 productId = item.productId,
-                                                quantity = item.quantity // Dodajemy quantity
+                                                quantity = item.quantity
                                             )
                                         }
                                     )

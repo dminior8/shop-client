@@ -6,6 +6,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import pl.dminior8.shop_client.data.local.ProductDao
 import pl.dminior8.shop_client.data.local.getOrCreateUserId
@@ -22,9 +24,14 @@ import javax.inject.Singleton
 class RepositoryModule {
     @Provides
     @Singleton
+    fun provideIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
+
+    @Provides
+    @Singleton
     fun provideProductRepository( // argumenty funkcji automatycznie wstrzykiwane przez Hilt
         productDao: ProductDao,
         shopApi: ShopApi,
+        ioDispatcher: CoroutineDispatcher
     ): ProductRepository = ProductRepositoryImpl(productDao, shopApi) // zwracana wartość: instancja z przekazanymi zależnościami
 
     @Provides

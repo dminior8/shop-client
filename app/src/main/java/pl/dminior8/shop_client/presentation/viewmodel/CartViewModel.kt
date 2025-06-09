@@ -12,18 +12,21 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CartViewModel @Inject constructor(
-    private val cartRepo: CartRepository
+    private val cartRepository: CartRepository
 ) : ViewModel() {
 
-        private val _uiState = MutableStateFlow<CartUiState>(CartUiState.Loading)
+    private val _uiState = MutableStateFlow<CartUiState>(CartUiState.Loading)
     val uiState: StateFlow<CartUiState> = _uiState.asStateFlow()
 
     init { fetchCart() }
 
     fun fetchCart() {
         viewModelScope.launch {
-            cartRepo.getCartItems()
-                .catch { _uiState.value = CartUiState.Error("Błąd ładowania koszyka") }
+            cartRepository.getCartItems()
+                .catch { e ->
+                    _uiState.value = CartUiState.Error("Cart fetching error")
+                    Log.e("CartViewModel", "Error during removing product from cart", e)
+                }
                 .collect { items ->
                     val total = items.sumOf { it.price * it.quantity }
                     _uiState.value = CartUiState.Success(items, total)
@@ -34,10 +37,11 @@ class CartViewModel @Inject constructor(
     fun removeFromCart(productId: UUID, quantity: Int) {
         viewModelScope.launch {
             try {
-                cartRepo.removeFromCart(
+                cartRepository.removeFromCart(
                     productId = productId,
-                    quantity = quantity // Przekazujemy quantity do repo
+                    quantity = quantity
                 )
+                // Immediately fetch updated cart state
                 fetchCart()
             } catch (e: Exception) {
                 _uiState.value = CartUiState.Error("Error during remove product from cart")

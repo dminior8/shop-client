@@ -29,7 +29,7 @@ fun CartListItem(
     ) {
         Column(modifier = Modifier.weight(1f)) {
             Text(
-                text = item.id.toString(),
+                text = item.productName,
                 style = MaterialTheme.typography.titleMedium
             )
             Text(
