@@ -24,7 +24,7 @@ class CartViewModel @Inject constructor(
         viewModelScope.launch {
             cartRepository.getCartItems()
                 .catch { e ->
-                    _uiState.value = CartUiState.Error("Cart fetching error")
+                    _uiState.value = CartUiState.Error("Failed to load or update cart")
                     Log.e("CartViewModel", "Error during removing product from cart", e)
                 }
                 .collect { items ->
@@ -36,12 +36,23 @@ class CartViewModel @Inject constructor(
 
     fun removeFromCart(productId: UUID, quantity: Int) {
         viewModelScope.launch {
+            val currentItems = (_uiState.value as? CartUiState.Success)?.items?.toMutableList()
+            val productIndex = currentItems?.indexOfFirst { it.productId == productId }
+            if (productIndex != null && productIndex >= 0) {
+                val item = currentItems[productIndex]
+                val newQuantity = item.quantity - quantity
+                if (newQuantity <= 0) {
+                    currentItems.removeAt(productIndex)
+                } else {
+                    currentItems[productIndex] = item.copy(quantity = newQuantity)
+                }
+                _uiState.value = CartUiState.Success(currentItems, currentItems.sumOf { it.price * it.quantity })
+            }
             try {
                 cartRepository.removeFromCart(
                     productId = productId,
                     quantity = quantity
                 )
-                // Immediately fetch updated cart state
                 fetchCart()
             } catch (e: Exception) {
                 _uiState.value = CartUiState.Error("Error during remove product from cart")

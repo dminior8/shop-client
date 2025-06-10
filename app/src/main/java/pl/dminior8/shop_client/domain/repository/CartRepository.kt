@@ -3,11 +3,11 @@ package pl.dminior8.shop_client.domain.repository
 
 import kotlinx.coroutines.flow.Flow
 import pl.dminior8.shop_client.data.remote.dto.CartDto
-import pl.dminior8.shop_client.data.remote.dto.CartItemDto
+import pl.dminior8.shop_client.domain.model.CartItem
 import java.util.UUID
 
 interface CartRepository {
-    fun getCartItems(): Flow<List<CartItemDto>>
+    fun getCartItems(): Flow<List<CartItem>>
     suspend fun addToCart(productId: UUID, quantity: Int)
     suspend fun removeFromCart(productId: UUID, quantity: Int)
     suspend fun createCart()

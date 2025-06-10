@@ -14,11 +14,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import pl.dminior8.shop_client.data.remote.dto.CartItemDto
+import pl.dminior8.shop_client.domain.model.CartItem
 
 @Composable
 fun CartListItem(
-    item: CartItemDto,
+    item: CartItem,
     onRemove: () -> Unit
 ) {
     Row(
